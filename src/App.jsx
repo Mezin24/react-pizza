@@ -3,12 +3,15 @@ import { Header } from 'src/components/Header';
 import { Categories } from 'src/components/Categories';
 import { PizzaSort } from 'src/components/PizzaSort';
 import { PizzaBlock } from 'src/components/PizzaBlock';
+import { Skeleton } from './components/PizzaBlock/Skeleton';
 
 function App() {
   const [pizzas, setPizzas] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchPizza = async () => {
+      setIsLoading(true);
       try {
         const response = await fetch(
           'https://66b22a731ca8ad33d4f6cda8.mockapi.io/items'
@@ -20,10 +23,26 @@ function App() {
         setPizzas(data);
       } catch (error) {
         console.log('Error: ', error);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchPizza();
   }, []);
+
+  const renderSkeleton = [...new Array(10)].map((_, index) => (
+    <Skeleton key={index} />
+  ));
+  const renderPizza = pizzas.map((pizza) => (
+    <PizzaBlock
+      key={pizza.id}
+      title={pizza.title}
+      price={pizza.price}
+      imageUrl={pizza.imageUrl}
+      sizes={pizza.sizes}
+      types={pizza.types}
+    />
+  ));
 
   return (
     <div className='wrapper'>
@@ -36,16 +55,7 @@ function App() {
           </div>
           <h2 className='content__title'>Все пиццы</h2>
           <div className='content__items'>
-            {pizzas.map((pizza) => (
-              <PizzaBlock
-                key={pizza.id}
-                title={pizza.title}
-                price={pizza.price}
-                imageUrl={pizza.imageUrl}
-                sizes={pizza.sizes}
-                types={pizza.types}
-              />
-            ))}
+            {isLoading ? renderSkeleton : renderPizza}
           </div>
         </div>
       </div>
