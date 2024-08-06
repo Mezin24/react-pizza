@@ -1,11 +1,30 @@
-import './App.css';
+import { useState, useEffect } from 'react';
 import { Header } from 'src/components/Header';
 import { Categories } from 'src/components/Categories';
 import { PizzaSort } from 'src/components/PizzaSort';
 import { PizzaBlock } from 'src/components/PizzaBlock';
-import pizzas from './assets/pizzas.json';
 
 function App() {
+  const [pizzas, setPizzas] = useState([]);
+
+  useEffect(() => {
+    const fetchPizza = async () => {
+      try {
+        const response = await fetch(
+          'https://66b22a731ca8ad33d4f6cda8.mockapi.io/items'
+        );
+        const data = await response.json();
+        if (!data) {
+          throw new Error('Fetch error');
+        }
+        setPizzas(data);
+      } catch (error) {
+        console.log('Error: ', error);
+      }
+    };
+    fetchPizza();
+  }, []);
+
   return (
     <div className='wrapper'>
       <Header />
