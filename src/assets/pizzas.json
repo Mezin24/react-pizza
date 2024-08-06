@@ -1,0 +1,102 @@
+[
+  {
+    "id": 0,
+    "imageUrl": "https://panampizza.ru/storage/images/61f42acc1b0cd13257d44ee32a4434a401183c89/61f42acc1b0cd13257d44ee32a4434a401183c89_275-275.webp",
+    "title": "Пепперони Фреш с перцем",
+    "types": [0, 1],
+    "sizes": [26, 30, 40],
+    "price": 803,
+    "category": 0,
+    "rating": 4
+  },
+  {
+    "id": 1,
+    "imageUrl": "https://panampizza.ru/storage/images/823f317ef68d1dededaac4204977af3f108318e4/823f317ef68d1dededaac4204977af3f108318e4_275-275.webp",
+    "title": "Сырная",
+    "types": [0],
+    "sizes": [26, 40],
+    "price": 245,
+    "category": 0,
+    "rating": 6
+  },
+  {
+    "id": 2,
+    "imageUrl": "https://panampizza.ru/storage/images/16cfe3320e18788fae184a7e00f838461a1cd68f/16cfe3320e18788fae184a7e00f838461a1cd68f_275-275.webp",
+    "title": "Цыпленок барбекю",
+    "types": [0],
+    "sizes": [26, 40],
+    "price": 295,
+    "category": 1,
+    "rating": 4
+  },
+  {
+    "id": 3,
+    "imageUrl": "https://panampizza.ru/storage/images/adaafa8c9d2bee47d4f534d0dcdb7bd88ab1b192/adaafa8c9d2bee47d4f534d0dcdb7bd88ab1b192_275-275.webp",
+    "title": "Кисло-сладкий цыпленок",
+    "types": [1],
+    "sizes": [26, 30, 40],
+    "price": 275,
+    "category": 2,
+    "rating": 2
+  },
+  {
+    "id": 4,
+    "imageUrl": "https://panampizza.ru/storage/images/092b67e68543f04c1fed5d33a8d9d607b798c4e7/092b67e68543f04c1fed5d33a8d9d607b798c4e7_275-275.webp",
+    "title": "Чизбургер-пицца",
+    "types": [0, 1],
+    "sizes": [26, 30, 40],
+    "price": 415,
+    "category": 3,
+    "rating": 8
+  },
+  {
+    "id": 5,
+    "imageUrl": "https://panampizza.ru/storage/images/b99f25843a441881fc6f737884114cc185d97e83/b99f25843a441881fc6f737884114cc185d97e83_275-275.webp",
+    "title": "Крэйзи пепперони",
+    "types": [0],
+    "sizes": [30, 40],
+    "price": 580,
+    "category": 2,
+    "rating": 2
+  },
+  {
+    "id": 6,
+    "imageUrl": "https://panampizza.ru/storage/images/5760c3952561719c6a5d2d47bf9319ce43e0dd02/5760c3952561719c6a5d2d47bf9319ce43e0dd02_275-275.webp",
+    "title": "Пепперони",
+    "types": [0, 1],
+    "sizes": [26, 30, 40],
+    "price": 675,
+    "category": 1,
+    "rating": 9
+  },
+  {
+    "id": 7,
+    "imageUrl": "https://panampizza.ru/storage/images/25a5bc4bb0ac802ff6d810045dfc55602a8668d0/25a5bc4bb0ac802ff6d810045dfc55602a8668d0_275-275.webp",
+    "title": "Маргарита",
+    "types": [0, 1],
+    "sizes": [26, 30, 40],
+    "price": 450,
+    "category": 4,
+    "rating": 10
+  },
+  {
+    "id": 8,
+    "imageUrl": "https://panampizza.ru/storage/images/d742ca556e25ef718bf6ef5da46b1163229ea1cf/d742ca556e25ef718bf6ef5da46b1163229ea1cf_275-275.webp",
+    "title": "Четыре сезона",
+    "types": [0, 1],
+    "sizes": [26, 30, 40],
+    "price": 395,
+    "category": 5,
+    "rating": 10
+  },
+  {
+    "id": 9,
+    "imageUrl": "https://panampizza.ru/storage/images/84bb6b6d33b7550926fbb6381bf35e2bd1c2d42b/84bb6b6d33b7550926fbb6381bf35e2bd1c2d42b_275-275.webp",
+    "title": "Овощи и грибы 🌱",
+    "types": [0, 1],
+    "sizes": [26, 30, 40],
+    "price": 285,
+    "category": 5,
+    "rating": 7
+  }
+]
