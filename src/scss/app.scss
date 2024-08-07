@@ -9,7 +9,7 @@ body {
 }
 
 .wrapper {
-  width: calc(100vw - 100px);
+  width: calc(100vw - 50px);
   height: 100%;
   background-color: #fff;
   margin: 50px auto;
@@ -25,13 +25,16 @@ body {
   }
 
   &__items {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;
   }
 
   &__top {
     display: flex;
+    flex-wrap: wrap-reverse;
+    row-gap: 30px;
     align-items: center;
     justify-content: space-between;
   }
@@ -70,7 +73,7 @@ body {
       margin-right: 10px;
       path {
         stroke: $black;
-        strokeWidth: 1.9;
+        strokewidth: 1.9;
       }
     }
   }
@@ -259,7 +262,7 @@ body {
           margin-right: 12px;
           path {
             fill: transparent;
-            strokeWidth: 2;
+            strokewidth: 2;
           }
         }
       }
