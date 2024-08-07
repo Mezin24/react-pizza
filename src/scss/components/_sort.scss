@@ -3,6 +3,7 @@
 .sort {
   position: relative;
   &__label {
+    min-width: 290px;
     display: flex;
     align-items: center;
 
@@ -30,7 +31,7 @@
     border-radius: 10px;
     overflow: hidden;
     padding: 10px 0;
-    width: 160px;
+    width: 200px;
 
     ul {
       overflow: hidden;

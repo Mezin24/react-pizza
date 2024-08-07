@@ -1,28 +1,26 @@
 import clsx from 'clsx';
-import { useState } from 'react';
+import { categories } from 'src/const';
 
-const categories = [
-  'Все',
-  'Мясные',
-  'Вегетарианская',
-  'Гриль',
-  'Острые',
-  'Закрытые',
-];
+/**
+ * @param {{
+ * value: number,
+ * onChangeCategory: Function
+ * }}props
+ */
 
-export const Categories = () => {
-  const [currentCategory, setCurrentCategory] = useState(categories[0]);
+export const Categories = ({ onChangeCategory, value }) => {
+  const currentCategory = categories[value];
 
   return (
     <div className='categories'>
       <ul>
-        {categories.map((category) => (
+        {categories.map((category, i) => (
           <li
             key={category}
-            onClick={() => setCurrentCategory(category)}
+            onClick={() => onChangeCategory(i)}
             className={clsx({ active: category === currentCategory })}
           >
-            {category}
+            {categories[i]}
           </li>
         ))}
       </ul>

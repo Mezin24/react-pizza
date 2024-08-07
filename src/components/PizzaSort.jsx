@@ -1,16 +1,22 @@
 import { useState } from 'react';
+import { pizzaSort } from 'src/const';
 
-const pizzaSort = ['популярности', 'цене', 'алфавиту'];
+/**
+ *
+ * @param{{
+ * sortBy: {name: string, sortProperty: string},
+ * onChangeSort: Function
+ * }}prop
+ */
 
-export const PizzaSort = () => {
+export const PizzaSort = ({ sortBy, onChangeSort }) => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [sortBy, setSortBy] = useState(pizzaSort[0]);
 
   const togglePopup = () => setIsPopupOpen((prev) => !prev);
 
   const renderSort = pizzaSort.map((sort) => (
-    <li key={sort} onClick={() => setSortBy(sort)}>
-      {sort}
+    <li key={sort.sortProperty} onClick={() => onChangeSort(sort)}>
+      {sort.name}
     </li>
   ));
 
@@ -30,7 +36,7 @@ export const PizzaSort = () => {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span>{sortBy}</span>
+        <span>{sortBy.name}</span>
       </div>
       {isPopupOpen && (
         <div className='sort__popup'>
