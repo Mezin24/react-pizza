@@ -3,7 +3,7 @@ import pizzaLogo from 'src/assets/img/pizza-logo.svg';
 import { CartIcon } from './icons/CartIcon';
 import { SearchPizza } from './SearchPizza';
 
-export const Header = ({ searchInput, setSearchInput }) => {
+export const Header = () => {
   return (
     <div className='header'>
       <div className='container'>
@@ -14,10 +14,7 @@ export const Header = ({ searchInput, setSearchInput }) => {
             <p>самая вкусная пицца во вселенной</p>
           </div>
         </Link>
-        <SearchPizza
-          searchInput={searchInput}
-          setSearchInput={setSearchInput}
-        />
+        <SearchPizza />
         <div className='header__cart'>
           <Link to='/cart' className='button button--cart'>
             <span>520 ₽</span>

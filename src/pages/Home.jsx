@@ -4,6 +4,7 @@ import { PizzaSort } from 'src/components/PizzaSort';
 import { PizzaBlock } from 'src/components/PizzaBlock';
 import { Skeleton } from 'src/components/PizzaBlock/Skeleton';
 import { pizzaSort } from 'src/const';
+import { useSearchContext } from 'src/context/SearchContext';
 
 const createQuery = (category, sortBy) => {
   const categoryQuery = category === 0 ? '' : `category=${category}&`;
@@ -13,7 +14,8 @@ const createQuery = (category, sortBy) => {
   )}&order=${sortBy?.sortProperty.includes('-') ? 'desc' : 'asc'}`;
 };
 
-export const Home = ({ searchInput }) => {
+export const Home = () => {
+  const { searchInput } = useSearchContext();
   const [pizzas, setPizzas] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [categoryIndex, setCategoryIndex] = useState(0);

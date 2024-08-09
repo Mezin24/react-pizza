@@ -1,8 +1,10 @@
 import styles from './SearchPizza.module.scss';
 import { CloseIcon } from './icons/CloseIcon';
 import { SearchIcon } from './icons/SearchIcon';
+import { useSearchContext } from 'src/context/SearchContext';
 
-export const SearchPizza = ({ searchInput, setSearchInput }) => {
+export const SearchPizza = () => {
+  const { searchInput, setSearchInput } = useSearchContext();
   return (
     <div className={styles.search}>
       <SearchIcon className={styles.searchIcon} />
