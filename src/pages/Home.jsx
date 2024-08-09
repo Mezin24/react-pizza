@@ -13,7 +13,7 @@ const createQuery = (category, sortBy) => {
   )}&order=${sortBy?.sortProperty.includes('-') ? 'desc' : 'asc'}`;
 };
 
-export const Home = () => {
+export const Home = ({ searchInput }) => {
   const [pizzas, setPizzas] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [categoryIndex, setCategoryIndex] = useState(0);
@@ -42,10 +42,14 @@ export const Home = () => {
     fetchPizza();
   }, [categoryIndex, sortBy]);
 
+  const filteredPizza = pizzas.filter((p) =>
+    p?.title.toLowerCase().includes(searchInput.toLowerCase())
+  );
+
   const renderSkeleton = [...new Array(10)].map((_, index) => (
     <Skeleton key={index} />
   ));
-  const renderPizza = pizzas.map((pizza) => (
+  const renderPizza = filteredPizza.map((pizza) => (
     <PizzaBlock
       key={pizza.id}
       title={pizza.title}

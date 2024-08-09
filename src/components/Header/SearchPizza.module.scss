@@ -1,0 +1,39 @@
+.search {
+  position: relative;
+
+}
+
+.input {
+  border: 1px solid rgba($color: #000000, $alpha: 0.2);
+  padding: 8px 36px;
+  width: 300px;
+  border-radius: 12px;
+  outline: none;
+  font-size: 18px;
+  
+  &:focus {
+    border: 1px solid rgba($color: #000000, $alpha: 0.7);
+
+  }
+}
+
+.closeBtn {
+  cursor: pointer;
+}
+
+.closeIcon,
+.searchIcon {
+  width: 28px;
+  height: 28px;
+  position: absolute;
+  fill:rgba($color: #000000, $alpha: 0.4);
+  top: 8px;
+}
+
+.searchIcon {
+  left: 8px;
+}
+
+.closeIcon {
+  right: 8px;
+}
