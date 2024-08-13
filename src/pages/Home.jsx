@@ -1,18 +1,25 @@
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
+import qs from 'qs';
+import { useNavigate } from 'react-router-dom';
 
 import { Categories } from 'src/components/Categories';
 import { PizzaSort } from 'src/components/PizzaSort';
 import { PizzaBlock } from 'src/components/PizzaBlock';
 import { Skeleton } from 'src/components/PizzaBlock/Skeleton';
 import { useSearchContext } from 'src/context/SearchContext';
+import { pizzaSort } from 'src/const';
+import { setFilters } from 'src/redux/slices/filter';
 
-const createQuery = (category, sortBy) => {
+const createQuery = (category, sortBy, search) => {
   const categoryQuery = category === 0 ? '' : `category=${category}&`;
   return `?${categoryQuery}sortBy=${sortBy?.sortProperty.replace(
     '-',
     ''
-  )}&order=${sortBy?.sortProperty.includes('-') ? 'desc' : 'asc'}`;
+  )}&order=${
+    sortBy?.sortProperty.includes('-') ? 'desc' : 'asc'
+  }&search=${search}`;
 };
 
 export const Home = () => {
@@ -20,17 +27,40 @@ export const Home = () => {
   const { searchInput } = useSearchContext();
   const [pizzas, setPizzas] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (window.location.search) {
+      const params = qs.parse(window.location.search.substring(1));
+      const sortBy = pizzaSort.find((p) => p.sortProperty === params.sortBy);
+      dispatch(
+        setFilters({
+          categoryIndex: params.category,
+          sortBy,
+        })
+      );
+    }
+  }, [dispatch]);
+
+  useEffect(() => {
+    const params = qs.stringify({
+      category: categoryIndex,
+      sortBy: sortBy.sortProperty,
+      // search: searchInput,
+    });
+    navigate(`?${params}`);
+  }, [categoryIndex, navigate, searchInput, sortBy]);
 
   useEffect(() => {
     const fetchPizza = async () => {
       setIsLoading(true);
 
-      const query = createQuery(categoryIndex, sortBy);
+      const query = createQuery(categoryIndex, sortBy, searchInput);
       try {
-        const response = await fetch(
+        const { data } = await axios.get(
           'https://66b22a731ca8ad33d4f6cda8.mockapi.io/items' + query
         );
-        const data = await response.json();
         if (!data) {
           throw new Error('Fetch error');
         }
@@ -42,16 +72,12 @@ export const Home = () => {
       }
     };
     fetchPizza();
-  }, [categoryIndex, sortBy]);
-
-  const filteredPizza = pizzas.filter((p) =>
-    p?.title.toLowerCase().includes(searchInput.toLowerCase())
-  );
+  }, [categoryIndex, searchInput, sortBy]);
 
   const renderSkeleton = [...new Array(10)].map((_, index) => (
     <Skeleton key={index} />
   ));
-  const renderPizza = filteredPizza.map((pizza) => (
+  const renderPizza = pizzas.map((pizza) => (
     <PizzaBlock
       key={pizza.id}
       title={pizza.title}
