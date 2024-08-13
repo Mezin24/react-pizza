@@ -1,15 +1,13 @@
+import { useDispatch, useSelector } from 'react-redux';
 import clsx from 'clsx';
+
 import { categories } from 'src/const';
+import { setCategoryIndex } from 'src/redux/slices/filter';
 
-/**
- * @param {{
- * value: number,
- * onChangeCategory: Function
- * }}props
- */
-
-export const Categories = ({ onChangeCategory, value }) => {
-  const currentCategory = categories[value];
+export const Categories = () => {
+  const { categoryIndex } = useSelector((state) => state.filter);
+  const dispatch = useDispatch();
+  const currentCategory = categories[categoryIndex];
 
   return (
     <div className='categories'>
@@ -17,7 +15,7 @@ export const Categories = ({ onChangeCategory, value }) => {
         {categories.map((category, i) => (
           <li
             key={category}
-            onClick={() => onChangeCategory(i)}
+            onClick={() => dispatch(setCategoryIndex(i))}
             className={clsx({ active: category === currentCategory })}
           >
             {categories[i]}

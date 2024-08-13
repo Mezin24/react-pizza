@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+
 import { Categories } from 'src/components/Categories';
 import { PizzaSort } from 'src/components/PizzaSort';
 import { PizzaBlock } from 'src/components/PizzaBlock';
 import { Skeleton } from 'src/components/PizzaBlock/Skeleton';
-import { pizzaSort } from 'src/const';
 import { useSearchContext } from 'src/context/SearchContext';
 
 const createQuery = (category, sortBy) => {
@@ -15,11 +16,10 @@ const createQuery = (category, sortBy) => {
 };
 
 export const Home = () => {
+  const { categoryIndex, sortBy } = useSelector((state) => state.filter);
   const { searchInput } = useSearchContext();
   const [pizzas, setPizzas] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [categoryIndex, setCategoryIndex] = useState(0);
-  const [sortBy, setSortBy] = useState(pizzaSort[0]);
 
   useEffect(() => {
     const fetchPizza = async () => {
@@ -64,14 +64,8 @@ export const Home = () => {
   return (
     <>
       <div className='content__top'>
-        <Categories
-          value={categoryIndex}
-          onChangeCategory={(i) => setCategoryIndex(i)}
-        />
-        <PizzaSort
-          sortBy={sortBy}
-          onChangeSort={(sortBy) => setSortBy(sortBy)}
-        />
+        <Categories />
+        <PizzaSort />
       </div>
       <h2 className='content__title'>Все пиццы</h2>
       <div className='content__items'>
