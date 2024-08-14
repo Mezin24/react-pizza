@@ -1,8 +1,11 @@
 import clsx from 'clsx';
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addProduct } from 'src/redux/slices/cart';
 
 /**
  * @param{{
+ * id: number;
  * imageUrl: string;
  * title: string;
  * types: Array,
@@ -15,12 +18,28 @@ import { useState } from 'react';
 
 const pizzaTypeNames = ['тонкое', 'традиционное'];
 
-export const PizzaBlock = ({ price, title, imageUrl, sizes, types }) => {
+export const PizzaBlock = ({ price, title, imageUrl, sizes, types, id }) => {
   const [currentType, setCurrentTupe] = useState(types?.[0]);
   const [currentSize, setCurrentSize] = useState(sizes?.[0]);
+  const dispatch = useDispatch();
+  const cartItem = useSelector((state) =>
+    state.cart.items.find((item) => item.id === id)
+  );
 
   const onChangeType = (typeIndex) => setCurrentTupe(typeIndex);
   const onChangeSize = (size) => setCurrentSize(size);
+  const onAddPizza = () => {
+    const newItem = {
+      id,
+      price,
+      title,
+      imageUrl,
+      size: currentSize,
+      type: pizzaTypeNames[currentType],
+      amount: 1,
+    };
+    dispatch(addProduct(newItem));
+  };
 
   const renderTypes = types?.map((type) => (
     <li
@@ -52,7 +71,10 @@ export const PizzaBlock = ({ price, title, imageUrl, sizes, types }) => {
       </div>
       <div className='pizza-block__bottom'>
         <div className='pizza-block__price'>от {price} ₽</div>
-        <div className='button button--outline button--add'>
+        <button
+          className='button button--outline button--add'
+          onClick={onAddPizza}
+        >
           <svg
             width='12'
             height='12'
@@ -66,8 +88,8 @@ export const PizzaBlock = ({ price, title, imageUrl, sizes, types }) => {
             />
           </svg>
           <span>Добавить</span>
-          <i>1</i>
-        </div>
+          {cartItem?.amount && <i>{cartItem?.amount}</i>}
+        </button>
       </div>
     </div>
   );

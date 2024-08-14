@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import qs from 'qs';
@@ -29,6 +29,8 @@ export const Home = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const isSearh = useRef(false);
+  const isMounted = useRef(false);
 
   useEffect(() => {
     if (window.location.search) {
@@ -40,16 +42,19 @@ export const Home = () => {
           sortBy,
         })
       );
+      isSearh.current = true;
     }
   }, [dispatch]);
 
   useEffect(() => {
-    const params = qs.stringify({
-      category: categoryIndex,
-      sortBy: sortBy.sortProperty,
-      // search: searchInput,
-    });
-    navigate(`?${params}`);
+    if (isMounted.current) {
+      const params = qs.stringify({
+        category: categoryIndex,
+        sortBy: sortBy.sortProperty,
+      });
+      navigate(`?${params}`);
+    }
+    isMounted.current = true;
   }, [categoryIndex, navigate, searchInput, sortBy]);
 
   useEffect(() => {
@@ -71,7 +76,11 @@ export const Home = () => {
         setIsLoading(false);
       }
     };
-    fetchPizza();
+
+    if (!isSearh.current) {
+      fetchPizza();
+    }
+    isSearh.current = false;
   }, [categoryIndex, searchInput, sortBy]);
 
   const renderSkeleton = [...new Array(10)].map((_, index) => (
@@ -85,6 +94,7 @@ export const Home = () => {
       imageUrl={pizza.imageUrl}
       sizes={pizza.sizes}
       types={pizza.types}
+      id={pizza.id}
     />
   ));
   return (

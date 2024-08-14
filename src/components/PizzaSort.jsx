@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { setSortBy } from 'src/redux/slices/filter';
@@ -8,6 +8,8 @@ export const PizzaSort = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const { sortBy } = useSelector((state) => state.filter);
   const dispatch = useDispatch();
+  const sortRef = useRef(null);
+
   const togglePopup = () => setIsPopupOpen((prev) => !prev);
 
   const onChangeSort = (sort) => {
@@ -20,8 +22,21 @@ export const PizzaSort = () => {
     </li>
   ));
 
+  useEffect(() => {
+    const clickHandler = (event) => {
+      const paths = event.path || event.composedPath();
+      if (!paths.includes(sortRef.current)) {
+        setIsPopupOpen(false);
+      }
+    };
+
+    document.body.addEventListener('click', clickHandler);
+
+    return () => document.body.removeEventListener('click', clickHandler);
+  }, []);
+
   return (
-    <div className='sort' onClick={togglePopup}>
+    <div className='sort' onClick={togglePopup} ref={sortRef}>
       <div className='sort__label'>
         <svg
           width='10'
