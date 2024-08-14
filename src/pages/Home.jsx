@@ -1,6 +1,5 @@
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
 
@@ -11,25 +10,15 @@ import { Skeleton } from 'src/components/PizzaBlock/Skeleton';
 import { useSearchContext } from 'src/context/SearchContext';
 import { pizzaSort } from 'src/const';
 import { setFilters } from 'src/redux/slices/filter';
-
-const createQuery = (category, sortBy, search) => {
-  const categoryQuery = category === 0 ? '' : `category=${category}&`;
-  return `?${categoryQuery}sortBy=${sortBy?.sortProperty.replace(
-    '-',
-    ''
-  )}&order=${
-    sortBy?.sortProperty.includes('-') ? 'desc' : 'asc'
-  }&search=${search}`;
-};
+import { fetchPizza } from 'src/redux/slices/pizza';
 
 export const Home = () => {
   const { categoryIndex, sortBy } = useSelector((state) => state.filter);
+  const { pizzas, status } = useSelector((state) => state.pizza);
   const { searchInput } = useSearchContext();
-  const [pizzas, setPizzas] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const isSearh = useRef(false);
+  const isSearch = useRef(false);
   const isMounted = useRef(false);
 
   useEffect(() => {
@@ -42,7 +31,7 @@ export const Home = () => {
           sortBy,
         })
       );
-      isSearh.current = true;
+      isSearch.current = true;
     }
   }, [dispatch]);
 
@@ -58,30 +47,11 @@ export const Home = () => {
   }, [categoryIndex, navigate, searchInput, sortBy]);
 
   useEffect(() => {
-    const fetchPizza = async () => {
-      setIsLoading(true);
-
-      const query = createQuery(categoryIndex, sortBy, searchInput);
-      try {
-        const { data } = await axios.get(
-          'https://66b22a731ca8ad33d4f6cda8.mockapi.io/items' + query
-        );
-        if (!data) {
-          throw new Error('Fetch error');
-        }
-        setPizzas(data);
-      } catch (error) {
-        console.log('Error: ', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    if (!isSearh.current) {
-      fetchPizza();
+    if (!isSearch.current) {
+      dispatch(fetchPizza({ category: categoryIndex, sortBy }));
     }
-    isSearh.current = false;
-  }, [categoryIndex, searchInput, sortBy]);
+    isSearch.current = false;
+  }, [categoryIndex, dispatch, sortBy]);
 
   const renderSkeleton = [...new Array(10)].map((_, index) => (
     <Skeleton key={index} />
@@ -103,10 +73,26 @@ export const Home = () => {
         <Categories />
         <PizzaSort />
       </div>
-      <h2 className='content__title'>Все пиццы</h2>
-      <div className='content__items'>
-        {isLoading ? renderSkeleton : renderPizza}
-      </div>
+      {status === 'error' ? (
+        <div className='content__error'>
+          <h2>
+            Не удалось загрузить информацию о пиццах <span>😕</span>
+          </h2>
+          <p>
+            Вероятней всего, что то пошло не так.
+            <br />
+            Попробуйте загрузить страницу позже.
+          </p>
+        </div>
+      ) : (
+        <>
+          {' '}
+          <h2 className='content__title'>Все пиццы</h2>
+          <div className='content__items'>
+            {status === 'loading' ? renderSkeleton : renderPizza}
+          </div>
+        </>
+      )}
     </>
   );
 };

@@ -38,6 +38,17 @@ body {
     align-items: center;
     justify-content: space-between;
   }
+
+  &__error {
+    width: 500px;
+    margin: 100px auto;
+
+    h2 {
+      font-size: 2rem;
+      line-height: 2rem;
+      margin-bottom: 20px;
+    }
+  }
 }
 
 .container {
