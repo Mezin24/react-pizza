@@ -17,6 +17,7 @@ import {
  */
 
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 export const CartItem = ({
   id,
@@ -42,12 +43,12 @@ export const CartItem = ({
       <div className='cart__item-img'>
         <img className='pizza-block__image' src={imageUrl} alt='Pizza' />
       </div>
-      <div className='cart__item-info'>
+      <Link to={`/pizza/${id}`} className='cart__item-info'>
         <h3>{title}</h3>
         <p>
           {type}, {size} см.
         </p>
-      </div>
+      </Link>
       <div className='cart__item-count'>
         <button
           onClick={onReduceItem}

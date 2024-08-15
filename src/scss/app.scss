@@ -324,3 +324,31 @@ body {
     }
   }
 }
+
+.pizza {
+  &__block {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 30px;
+    width: 100%;
+    margin: 100px 0;
+
+    .button {
+      align-self: end;
+    }
+  }
+  &__image-box {
+    img {
+      width: 100%;
+    }
+  }
+  &__description {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  &__price {
+    font-size: 2rem;
+    align-self: end;
+  }
+}
