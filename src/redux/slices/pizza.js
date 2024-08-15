@@ -5,8 +5,8 @@ import { createQuery } from 'src/lib/createQuery';
 
 export const fetchPizza = createAsyncThunk(
   'pizza/fetchPizza',
-  async ({ category, sortBy }) => {
-    const query = createQuery(category, sortBy);
+  async ({ category, sortBy, search }) => {
+    const query = createQuery(category, sortBy, search);
 
     const { data } = await axios.get(
       'https://66b22a731ca8ad33d4f6cda8.mockapi.io/items' + query
@@ -39,5 +39,7 @@ const pizzaSlice = createSlice({
       });
   },
 });
+
+export const selectPizzaData = (state) => state.pizza;
 
 export default pizzaSlice.reducer;

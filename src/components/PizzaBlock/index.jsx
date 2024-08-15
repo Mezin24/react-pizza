@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addProduct } from 'src/redux/slices/cart';
 
+import { selectCartItemById } from 'src/redux/slices/cart';
+
 /**
  * @param{{
  * id: number;
@@ -22,9 +24,7 @@ export const PizzaBlock = ({ price, title, imageUrl, sizes, types, id }) => {
   const [currentType, setCurrentTupe] = useState(types?.[0]);
   const [currentSize, setCurrentSize] = useState(sizes?.[0]);
   const dispatch = useDispatch();
-  const cartItem = useSelector((state) =>
-    state.cart.items.find((item) => item.id === id)
-  );
+  const cartItem = useSelector(selectCartItemById(id));
 
   const onChangeType = (typeIndex) => setCurrentTupe(typeIndex);
   const onChangeSize = (size) => setCurrentSize(size);

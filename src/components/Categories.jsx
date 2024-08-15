@@ -2,10 +2,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import clsx from 'clsx';
 
 import { categories } from 'src/const';
-import { setCategoryIndex } from 'src/redux/slices/filter';
+import { selectFilter, setCategoryIndex } from 'src/redux/slices/filter';
 
 export const Categories = () => {
-  const { categoryIndex } = useSelector((state) => state.filter);
+  const { categoryIndex } = useSelector(selectFilter);
   const dispatch = useDispatch();
   const currentCategory = categories[categoryIndex];
 

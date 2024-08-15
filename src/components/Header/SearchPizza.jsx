@@ -1,20 +1,23 @@
 import { useRef, useState } from 'react';
-import styles from './SearchPizza.module.scss';
+import { useDispatch } from 'react-redux';
+
 import { CloseIcon } from './icons/CloseIcon';
 import { SearchIcon } from './icons/SearchIcon';
-import { useSearchContext } from 'src/context/SearchContext';
 import { useDebounce } from 'src/hooks/useDebounce';
+import { setSearchValue } from 'src/redux/slices/filter';
+
+import styles from './SearchPizza.module.scss';
 
 export const SearchPizza = () => {
-  const { setSearchInput } = useSearchContext();
+  const dispatch = useDispatch();
   const [value, setValue] = useState('');
   const inputRef = useRef(null);
   const debounce = useDebounce((value) => {
-    setSearchInput(value);
+    dispatch(setSearchValue(value));
   }, 400);
 
   const onClearHandler = () => {
-    setSearchInput('');
+    dispatch(setSearchValue(''));
     setValue('');
     inputRef.current.focus();
   };

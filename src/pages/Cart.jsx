@@ -2,9 +2,10 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { CartEmpty } from 'src/CartEmpty';
 import { CartItem } from 'src/components/CartItem';
+import { selectCartData } from 'src/redux/slices/cart';
 
 export const Cart = () => {
-  const { items, totalPrice, totalAmount } = useSelector((state) => state.cart);
+  const { items, totalPrice, totalAmount } = useSelector(selectCartData);
 
   if (!totalAmount) {
     return <CartEmpty />;

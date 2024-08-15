@@ -1,21 +1,20 @@
 import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
+import qs from 'qs';
 
 import { Categories } from 'src/components/Categories';
 import { PizzaSort } from 'src/components/PizzaSort';
 import { PizzaBlock } from 'src/components/PizzaBlock';
 import { Skeleton } from 'src/components/PizzaBlock/Skeleton';
-import { useSearchContext } from 'src/context/SearchContext';
 import { pizzaSort } from 'src/const';
-import { setFilters } from 'src/redux/slices/filter';
-import { fetchPizza } from 'src/redux/slices/pizza';
+import { selectFilter, setFilters } from 'src/redux/slices/filter';
+import { fetchPizza, selectPizzaData } from 'src/redux/slices/pizza';
 
 export const Home = () => {
-  const { categoryIndex, sortBy } = useSelector((state) => state.filter);
-  const { pizzas, status } = useSelector((state) => state.pizza);
-  const { searchInput } = useSearchContext();
+  const { categoryIndex, sortBy } = useSelector(selectFilter);
+  const { pizzas, status } = useSelector(selectPizzaData);
+  const { searchValue } = useSelector(selectFilter);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isSearch = useRef(false);
@@ -44,14 +43,16 @@ export const Home = () => {
       navigate(`?${params}`);
     }
     isMounted.current = true;
-  }, [categoryIndex, navigate, searchInput, sortBy]);
+  }, [categoryIndex, navigate, searchValue, sortBy]);
 
   useEffect(() => {
     if (!isSearch.current) {
-      dispatch(fetchPizza({ category: categoryIndex, sortBy }));
+      dispatch(
+        fetchPizza({ category: categoryIndex, sortBy, search: searchValue })
+      );
     }
     isSearch.current = false;
-  }, [categoryIndex, dispatch, sortBy]);
+  }, [categoryIndex, dispatch, searchValue, sortBy]);
 
   const renderSkeleton = [...new Array(10)].map((_, index) => (
     <Skeleton key={index} />

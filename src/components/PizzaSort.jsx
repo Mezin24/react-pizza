@@ -1,12 +1,12 @@
 import { useRef, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { setSortBy } from 'src/redux/slices/filter';
+import { selectFilter, setSortBy } from 'src/redux/slices/filter';
 import { pizzaSort } from 'src/const';
 
 export const PizzaSort = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const { sortBy } = useSelector((state) => state.filter);
+  const { sortBy } = useSelector(selectFilter);
   const dispatch = useDispatch();
   const sortRef = useRef(null);
 
