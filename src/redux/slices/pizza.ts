@@ -2,10 +2,17 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 import { createQuery } from 'src/lib/createQuery';
+import { PizzaData } from 'src/types/pizza';
+
+interface FetchPizzaProps {
+  category: string;
+  sortBy: string;
+  search: string;
+}
 
 export const fetchPizza = createAsyncThunk(
   'pizza/fetchPizza',
-  async ({ category, sortBy, search }) => {
+  async ({ category, sortBy, search }: FetchPizzaProps) => {
     const query = createQuery(category, sortBy, search);
 
     const { data } = await axios.get(
@@ -15,7 +22,12 @@ export const fetchPizza = createAsyncThunk(
   }
 );
 
-const initialState = {
+export interface PizzaState {
+  pizzas: PizzaData[];
+  status: 'loading' | 'success' | 'error';
+}
+
+const initialState: PizzaState = {
   pizzas: [],
   status: 'loading',
 };

@@ -2,18 +2,19 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { addProduct } from 'src/redux/slices/cart';
-
-import { selectCartItemById } from 'src/redux/slices/cart';
+import { addProduct, selectCartItemById } from 'src/redux/slices/cart';
+import { Pizza, PizzaData } from 'src/types/pizza';
 
 export const PizzaDetails = () => {
-  const { id } = useParams();
-  const [pizza, setPizza] = useState(null);
+  const { id } = useParams<{ id: string }>();
+  const [pizza, setPizza] = useState<PizzaData | null>(null);
   const navigate = useNavigate();
   const cartItem = useSelector(selectCartItemById(id));
   const dispatch = useDispatch();
 
   const onAddPizza = () => {
+    if (!pizza) return;
+
     const newItem = {
       id,
       price: pizza.price,
@@ -27,9 +28,9 @@ export const PizzaDetails = () => {
   };
 
   useEffect(() => {
-    const fetchPizzaById = async (id) => {
+    const fetchPizzaById = async (id: string) => {
       try {
-        const { data } = await axios.get(
+        const { data } = await axios.get<PizzaData>(
           'https://66b22a731ca8ad33d4f6cda8.mockapi.io/items/' + id
         );
 
@@ -40,7 +41,9 @@ export const PizzaDetails = () => {
       }
     };
 
-    fetchPizzaById(id);
+    if (id) {
+      fetchPizzaById(id);
+    }
   }, []);
 
   if (!pizza) {
