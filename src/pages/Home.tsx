@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import qs from 'qs';
 
@@ -10,13 +10,14 @@ import { Skeleton } from 'src/components/PizzaBlock/Skeleton';
 import { pizzaSort } from 'src/const';
 import { selectFilter, setFilters } from 'src/redux/slices/filter';
 import { fetchPizza, selectPizzaData } from 'src/redux/slices/pizza';
+import { AppDispatch, useAppDispatch } from 'src/redux/store';
 
 export const Home = () => {
   const { categoryIndex, sortBy } = useSelector(selectFilter);
   const { pizzas, status } = useSelector(selectPizzaData);
   const { searchValue } = useSelector(selectFilter);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const isSearch = useRef(false);
   const isMounted = useRef(false);
 
@@ -26,7 +27,9 @@ export const Home = () => {
       const sortBy = pizzaSort.find((p) => p.sortProperty === params.sortBy);
       dispatch(
         setFilters({
+          // @ts-ignore
           categoryIndex: params.category,
+          // @ts-ignore
           sortBy,
         })
       );

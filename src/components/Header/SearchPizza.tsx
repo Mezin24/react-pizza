@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { ChangeEvent, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { CloseIcon } from './icons/CloseIcon';
@@ -11,7 +11,7 @@ import styles from './SearchPizza.module.scss';
 export const SearchPizza = () => {
   const dispatch = useDispatch();
   const [value, setValue] = useState('');
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const debounce = useDebounce((value) => {
     dispatch(setSearchValue(value));
   }, 400);
@@ -19,10 +19,10 @@ export const SearchPizza = () => {
   const onClearHandler = () => {
     dispatch(setSearchValue(''));
     setValue('');
-    inputRef.current.focus();
+    inputRef.current?.focus();
   };
 
-  const onChangeHandler = (e) => {
+  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const str = e.target.value;
     setValue(str);
     debounce(str);

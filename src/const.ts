@@ -1,3 +1,5 @@
+import { SortByProps } from './types/pizza';
+
 export const categories = [
   'Все',
   'Мясные',
@@ -7,7 +9,7 @@ export const categories = [
   'Закрытые',
 ];
 
-export const pizzaSort = [
+export const pizzaSort: SortByProps[] = [
   { name: 'популярности ⬆️', sortProperty: 'rating' },
   { name: 'популярности ⬇️', sortProperty: '-rating' },
   { name: 'цене ⬆️', sortProperty: 'price' },

@@ -1,18 +1,19 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, MouseEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { selectFilter, setSortBy } from 'src/redux/slices/filter';
 import { pizzaSort } from 'src/const';
+import { SortByProps } from 'src/types/pizza';
 
 export const PizzaSort = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const { sortBy } = useSelector(selectFilter);
   const dispatch = useDispatch();
-  const sortRef = useRef(null);
+  const sortRef = useRef<HTMLDivElement>(null);
 
   const togglePopup = () => setIsPopupOpen((prev) => !prev);
 
-  const onChangeSort = (sort) => {
+  const onChangeSort = (sort: SortByProps) => {
     dispatch(setSortBy(sort));
   };
 
@@ -23,9 +24,9 @@ export const PizzaSort = () => {
   ));
 
   useEffect(() => {
-    const clickHandler = (event) => {
-      const paths = event.path || event.composedPath();
-      if (!paths.includes(sortRef.current)) {
+    const clickHandler = (event: globalThis.MouseEvent) => {
+      const paths = event.composedPath();
+      if (sortRef.current && !paths.includes(sortRef.current)) {
         setIsPopupOpen(false);
       }
     };

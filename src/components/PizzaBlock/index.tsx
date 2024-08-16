@@ -5,30 +5,25 @@ import { Link } from 'react-router-dom';
 import { addProduct } from 'src/redux/slices/cart';
 
 import { selectCartItemById } from 'src/redux/slices/cart';
-
-/**
- * @param{{
- * id: number;
- * imageUrl: string;
- * title: string;
- * types: Array,
- * sizes: Array,
- * price: number,
- * category?: number
- * rating?: number
- * }}props
- */
+import { PizzaData } from 'src/types/pizza';
 
 const pizzaTypeNames = ['тонкое', 'традиционное'];
 
-export const PizzaBlock = ({ price, title, imageUrl, sizes, types, id }) => {
+export const PizzaBlock = ({
+  price,
+  title,
+  imageUrl,
+  sizes,
+  types,
+  id,
+}: PizzaData) => {
   const [currentType, setCurrentTupe] = useState(types?.[0]);
   const [currentSize, setCurrentSize] = useState(sizes?.[0]);
   const dispatch = useDispatch();
   const cartItem = useSelector(selectCartItemById(id));
 
-  const onChangeType = (typeIndex) => setCurrentTupe(typeIndex);
-  const onChangeSize = (size) => setCurrentSize(size);
+  const onChangeType = (typeIndex: number) => setCurrentTupe(typeIndex);
+  const onChangeSize = (size: number) => setCurrentSize(size);
   const onAddPizza = () => {
     const newItem = {
       id,

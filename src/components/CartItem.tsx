@@ -4,20 +4,9 @@ import {
   removeProduct,
 } from 'src/redux/slices/cart';
 
-/**
- * @param{{
- * id: number;
- * imageUrl: string;
- * title: string;
- * type: String,
- * size: Number,
- * price: number,
- * amount: number,
- * }}props
- */
-
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { Pizza } from 'src/types/pizza';
 
 export const CartItem = ({
   id,
@@ -27,10 +16,10 @@ export const CartItem = ({
   title,
   type,
   amount,
-}) => {
+}: Pizza) => {
   const dispatch = useDispatch();
 
-  const onAddItem = () => dispatch(addProduct({ id }));
+  const onAddItem = () => dispatch(addProduct({ id } as Pizza));
   const onReduceItem = () => dispatch(reduceProduct(id));
   const onClearCart = () => {
     if (confirm('Вы действительно хотите удалить товар из корзины?')) {
@@ -95,7 +84,7 @@ export const CartItem = ({
         </button>
       </div>
       <div className='cart__item-price'>
-        <b>{price * amount} ₽</b>
+        <b>{price && amount && price * amount} ₽</b>
       </div>
       <div className='cart__item-remove'>
         <button
