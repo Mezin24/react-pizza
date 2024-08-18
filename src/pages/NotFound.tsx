@@ -1,5 +1,7 @@
 import { NotFoundBlock } from 'src/components/NotFoundBlock';
 
-export const NotFound = () => {
+const NotFound = () => {
   return <NotFoundBlock />;
 };
+
+export default NotFound;

@@ -7,6 +7,7 @@ import {
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Pizza } from 'src/types/pizza';
+import clsx from 'clsx';
 
 export const CartItem = ({
   id,
@@ -27,6 +28,8 @@ export const CartItem = ({
     }
   };
 
+  const disabledMinus = amount === 1;
+
   return (
     <div className='cart__item'>
       <div className='cart__item-img'>
@@ -41,7 +44,11 @@ export const CartItem = ({
       <div className='cart__item-count'>
         <button
           onClick={onReduceItem}
-          className='button button--outline button--circle cart__item-count-minus'
+          className={clsx(
+            'button button--outline button--circle cart__item-count-minus',
+            disabledMinus && 'button--disabled'
+          )}
+          disabled={disabledMinus}
         >
           <svg
             width='10'

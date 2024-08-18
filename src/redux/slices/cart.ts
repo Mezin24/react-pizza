@@ -1,6 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Pizza } from 'src/types/pizza';
 import { RootState } from '../store';
+import { LOCAL_STORAGE_CART_KEY } from 'src/const';
+import { calcTotalPrice } from 'src/utils/calcTotalPrice';
+import { calcTotalAmount } from 'src/utils/calcTotalAmount';
+import { getCartFromLS } from 'src/utils/getCartFromLS';
 
 interface CartState {
   totalPrice: number;
@@ -8,10 +12,12 @@ interface CartState {
   items: Pizza[];
 }
 
+const { items, totalAmount, totalPrice } = getCartFromLS();
+
 const initialState: CartState = {
-  totalPrice: 0,
-  totalAmount: 0,
-  items: [],
+  totalPrice,
+  totalAmount,
+  items,
 };
 
 const cartSlice = createSlice({
@@ -27,11 +33,8 @@ const cartSlice = createSlice({
         state.items.push(payload);
       }
 
-      state.totalPrice = state.items.reduce(
-        (acc, cur) => cur.price * cur.amount + acc,
-        0
-      );
-      state.totalAmount = state.items.reduce((acc, cur) => cur.amount + acc, 0);
+      state.totalPrice = calcTotalPrice(state.items);
+      state.totalAmount = calcTotalAmount(state.items);
     },
     reduceProduct(state, { payload }: PayloadAction<string>) {
       const reducedItem = state.items.find((item) => item.id === payload);
@@ -47,11 +50,8 @@ const cartSlice = createSlice({
     },
     removeProduct(state, { payload }: PayloadAction<string>) {
       state.items = state.items.filter((item) => item.id !== payload);
-      state.totalPrice = state.items.reduce(
-        (acc, cur) => cur.price * cur.amount + acc,
-        0
-      );
-      state.totalAmount = state.items.reduce((acc, cur) => cur.amount + acc, 0);
+      state.totalPrice = calcTotalPrice(state.items);
+      state.totalAmount = calcTotalAmount(state.items);
     },
     clearItems(state) {
       state.items = [];

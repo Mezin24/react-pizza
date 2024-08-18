@@ -4,10 +4,20 @@ import { CartIcon } from './icons/CartIcon';
 import { SearchPizza } from './SearchPizza';
 import { useSelector } from 'react-redux';
 import { selectCartData } from 'src/redux/slices/cart';
+import { useEffect, useRef } from 'react';
+import { LOCAL_STORAGE_CART_KEY } from 'src/const';
 
 export const Header = () => {
-  const { totalAmount, totalPrice } = useSelector(selectCartData);
+  const { totalAmount, totalPrice, items } = useSelector(selectCartData);
   const { pathname } = useLocation();
+  const isMounted = useRef(false);
+
+  useEffect(() => {
+    if (isMounted.current) {
+      localStorage.setItem(LOCAL_STORAGE_CART_KEY, JSON.stringify(items));
+    }
+    isMounted.current = true;
+  }, [items]);
 
   return (
     <div className='header'>

@@ -2,10 +2,18 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { CartEmpty } from 'src/CartEmpty';
 import { CartItem } from 'src/components/CartItem';
-import { selectCartData } from 'src/redux/slices/cart';
+import { selectCartData, clearItems } from 'src/redux/slices/cart';
+import { useAppDispatch } from 'src/redux/store';
 
-export const Cart = () => {
+const Cart = () => {
   const { items, totalPrice, totalAmount } = useSelector(selectCartData);
+  const dispatch = useAppDispatch();
+
+  const clearCart = () => {
+    if (confirm('Вы уверены, что хотите очистить корзину,')) {
+      dispatch(clearItems());
+    }
+  };
 
   if (!totalAmount) {
     return <CartEmpty />;
@@ -47,7 +55,7 @@ export const Cart = () => {
             </svg>
             Корзина
           </h2>
-          <div className='cart__clear'>
+          <button className='cart__clear' onClick={clearCart}>
             <svg
               width='20'
               height='20'
@@ -86,7 +94,7 @@ export const Cart = () => {
             </svg>
 
             <span>Очистить корзину</span>
-          </div>
+          </button>
         </div>
         <div>
           {items.map((item) => (
@@ -136,3 +144,5 @@ export const Cart = () => {
     </div>
   );
 };
+
+export default Cart;

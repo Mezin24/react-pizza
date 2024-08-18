@@ -1,4 +1,4 @@
-export { Cart } from './Cart';
+export { CartAsync as Cart } from './Cart.async';
 export { Home } from './Home';
-export { NotFound } from './NotFound';
-export { PizzaDetails } from './PizzaDetails';
+export { NotFoundAsync as NotFound } from './NotFound.async';
+export { PizzaDetailsAsync as PizzaDetails } from './PizzaDetails.async';

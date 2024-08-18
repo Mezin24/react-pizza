@@ -1,11 +1,11 @@
-import { useRef, useState, useEffect, MouseEvent } from 'react';
+import { useRef, useState, useEffect, memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { selectFilter, setSortBy } from 'src/redux/slices/filter';
 import { pizzaSort } from 'src/const';
 import { SortByProps } from 'src/types/pizza';
 
-export const PizzaSort = () => {
+export const PizzaSort = memo(() => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const { sortBy } = useSelector(selectFilter);
   const dispatch = useDispatch();
@@ -61,4 +61,4 @@ export const PizzaSort = () => {
       )}
     </div>
   );
-};
+});

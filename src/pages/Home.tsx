@@ -10,7 +10,7 @@ import { Skeleton } from 'src/components/PizzaBlock/Skeleton';
 import { pizzaSort } from 'src/const';
 import { selectFilter, setFilters } from 'src/redux/slices/filter';
 import { fetchPizza, selectPizzaData } from 'src/redux/slices/pizza';
-import { AppDispatch, useAppDispatch } from 'src/redux/store';
+import { useAppDispatch } from 'src/redux/store';
 
 export const Home = () => {
   const { categoryIndex, sortBy } = useSelector(selectFilter);

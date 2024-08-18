@@ -2,11 +2,12 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { pizzaTypeNames } from 'src/const';
 import { addProduct, selectCartItemById } from 'src/redux/slices/cart';
 import { useAppDispatch } from 'src/redux/store';
 import { PizzaData } from 'src/types/pizza';
 
-export const PizzaDetails = () => {
+const PizzaDetails = () => {
   const { id } = useParams<{ id: string }>();
   const [pizza, setPizza] = useState<PizzaData | null>(null);
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ export const PizzaDetails = () => {
       title: pizza.title,
       imageUrl: pizza.imageUrl,
       size: pizza.sizes[0],
-      type: pizza.types[0],
+      type: pizzaTypeNames[0],
       amount: 1,
     };
     dispatch(addProduct(newItem));
@@ -117,3 +118,5 @@ export const PizzaDetails = () => {
     </div>
   );
 };
+
+export default PizzaDetails;

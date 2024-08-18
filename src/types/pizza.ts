@@ -1,11 +1,11 @@
 export interface Pizza {
   id: string;
-  price?: number;
+  price: number;
   title?: string;
   imageUrl?: string;
   size?: number;
-  type?: number;
-  amount?: number;
+  type?: string;
+  amount: number;
 }
 
 export interface PizzaData {

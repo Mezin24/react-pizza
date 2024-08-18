@@ -17,3 +17,6 @@ export const pizzaSort: SortByProps[] = [
   { name: 'алфавиту ⬆️', sortProperty: 'title' },
   { name: 'алфавиту ⬇️', sortProperty: '-title' },
 ];
+
+export const LOCAL_STORAGE_CART_KEY = 'react-pizza-cart';
+export const pizzaTypeNames = ['тонкое', 'традиционное'];

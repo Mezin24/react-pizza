@@ -3,8 +3,9 @@ import clsx from 'clsx';
 
 import { categories } from 'src/const';
 import { selectFilter, setCategoryIndex } from 'src/redux/slices/filter';
+import { memo } from 'react';
 
-export const Categories = () => {
+export const Categories = memo(() => {
   const { categoryIndex } = useSelector(selectFilter);
   const dispatch = useDispatch();
   const currentCategory = categories[categoryIndex];
@@ -24,4 +25,4 @@ export const Categories = () => {
       </ul>
     </div>
   );
-};
+});

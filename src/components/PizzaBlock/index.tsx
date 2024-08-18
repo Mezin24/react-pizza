@@ -2,12 +2,11 @@ import clsx from 'clsx';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { pizzaTypeNames } from 'src/const';
 import { addProduct } from 'src/redux/slices/cart';
 
 import { selectCartItemById } from 'src/redux/slices/cart';
 import { PizzaData } from 'src/types/pizza';
-
-const pizzaTypeNames = ['тонкое', 'традиционное'];
 
 export const PizzaBlock = ({
   price,
